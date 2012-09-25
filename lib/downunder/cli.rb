@@ -23,22 +23,29 @@ module DownUnder
         method_option :stylesheet, :type => :string, :aliases => ["-s"], :desc => "CSS stylesheet to style your content"
         def convert(source="")
             source = Dir.getwd if source.empty?
+            source = File.expand_path source
+            source_directory = source
             
+            # If source is an explicit file, get the parent of the file as
+            # source_directory
+            if !File.directory?(source)
+                source_directory = File.expand_path(File.dirname(source))
+            end
+            
+            # Generate output path if not specifiec explicitly
             if options.output.nil? then
-                target = File.join [File.dirname(source),File.basename(source).concat(".pdf")]
+                target = File.join source_directory, File.basename(source).concat(".pdf")
             else
                 target = options.output
             end
             
-            default_bundle = ResourceBundle.new do
-                @stylesheet = File.join([RES_PATH,"style.css"])
-                @coverpage = File.join([RES_PATH,"cover.html"])
-                @header = File.join([RES_PATH,"header.html"])
-                @footer = File.join([RES_PATH,"footer.html"])
-            end
+            # Create ResourceBundle and look for specific .downunder stuff:
+            bundle = ResourceBundle.new
+            bundle.lookup source_directory
             
-            core = DownUnder::Core.new(default_bundle)
-            core.render! source            
+            # Render
+            core = DownUnder::Core.new(bundle)
+            core.render! source
         end        
         
         map "-v" => :version

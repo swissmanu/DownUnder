@@ -7,7 +7,6 @@ module DownUnder
         
         def render!(source)
             
-            Logger.message "Looking for markdown files..."
             content = concat_files source, '.md'
             
             if content.empty? then
@@ -52,11 +51,13 @@ module DownUnder
         def concat_files(path, extension)
             content = ""
             
-            if File.file?(path) && path.end_with?(extension)
-                content.concat(read_file(path))
+            if File.file?(path) && File.extname(path).eql?(extension)
+                Logger.message "Processing  \"#{path}\""
+                content = read_file(path)
             else
+                Logger.message "Looking for markdown files in \"#{path}\":"
                 Dir.foreach(path) do |filename|
-                    if File.file?(filename) && filename.end_with?(extension)
+                    if File.file?(filename) && File.extname(filename).eql?(extension)
                         Logger.message " - \"#{filename}\""
                         content.concat(read_file(filename))
                     end

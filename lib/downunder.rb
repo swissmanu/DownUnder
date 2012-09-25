@@ -10,8 +10,6 @@ module DownUnder
     LIBRARY_PATH = File.join(File.dirname(__FILE__), "downunder")
     UTIL_PATH    = File.join(LIBRARY_PATH, "util")
     
-    puts RES_PATH
-    
     ##
     # Core files:
     autoload :Version,              File.join(LIBRARY_PATH, "version")
