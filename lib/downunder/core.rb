@@ -5,7 +5,7 @@ module DownUnder
             @ressource_bundle = ressource_bundle
         end
         
-        def render!(source)
+        def render!(source, target)
             
             content = concat_files source, '.md'
             
@@ -34,7 +34,7 @@ module DownUnder
                 "--footer-right \"Seite [page]/[topage]\"",
                 "--quiet",
                 "-",
-                "test.pdf"
+                target
             ]
 
             IO.popen(arguments.join(" "), "wb+") do |pdf|
