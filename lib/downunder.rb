@@ -7,7 +7,7 @@ module DownUnder
 
     ##
     # Internal paths
-    RES_PATH     = File.expand_path(File.join(File.dirname(__FILE__), "..", "res"))
+    RES_PATH     = File.expand_path(File.join(File.dirname(__FILE__), "..", "res"))    
     LIBRARY_PATH = File.join(File.dirname(__FILE__), "downunder")
     UTIL_PATH    = File.join(LIBRARY_PATH, "util")
     

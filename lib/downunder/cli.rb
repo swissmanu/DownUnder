@@ -5,14 +5,14 @@ module DownUnder
         
         desc "init [DIR]", "Creates a .downunder directory with cover and styling files for DownUnder"
         def init(directory_to_init="")
-            directory_to_init = Dir.getwd unless Dir.exists?(directory_to_init)
+            directory_to_init = File.expand_path(Dir.getwd) unless Dir.exists?(directory_to_init)
             boilerplate_directory = File.join(directory_to_init, ".downunder")
             
             if Dir.exists?(boilerplate_directory)
-                Logger.error "#{boilerplate_directory} exists already! Exiting."
+                Logger.error "\"#{boilerplate_directory}\" exists already! Exiting."
             else
-                Logger.message "Create #{boilerplate_directory} with boilerplate files..."
-                FileUtils.cp_r('res/',boilerplate_directory)                
+                Logger.message "Create \"#{boilerplate_directory}\" with boilerplate files..."
+                FileUtils.cp_r(RES_PATH,boilerplate_directory)                
             end
         end
         

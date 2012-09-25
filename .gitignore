@@ -1,3 +1,4 @@
 .DS_Store
 test*.pdf
 test*.md
+*.gem
