@@ -1,0 +1,31 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	
+	<script type="text/javascript">
+		function getNiceDateTime() {
+			var date = new Date();
+			var day = date.getDate();
+			var month = date.getMonth()+1;
+			var year = date.getFullYear();
+			var hour = date.getHours();
+			var minute = date.getMinutes();
+			
+			return day+'.'+month+'.'+year+', '+hour+':'+minute;
+		}
+	</script>
+	
+</head>
+<body class="titlepage">
+	<header>
+		<h1>InTe Vorlesungsnotizen</h1>
+		<h2>Manuel Alabor</h2>
+		<p class="meta">Erstellt am
+		<script type="text/javascript">
+			document.write(getNiceDateTime());
+		</script>
+		</p>
+	</header>
+</body>
+</html>

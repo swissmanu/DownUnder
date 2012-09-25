@@ -1,0 +1,44 @@
+body {
+	font-family: "Helvetica Neue";
+	font-size: 10pt;
+}
+
+body.titlepage header {
+	display: block;
+	margin-top: 50px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid lightgray;
+	text-align: center;
+}
+
+body.titlepage h1, body.titlepage h2 {
+	margin: 0;
+}
+
+
+ul { margin-left: -20px; }
+
+img { max-width: 100%; }
+
+code {
+	background-color: #EEE;
+	color: #070;
+}
+pre {
+	padding: 3px;
+	background-color: #EEE;
+}
+
+table.CodeRay {
+	border: none;
+	border-spacing: 0;
+	width: 100%;
+}
+
+table.CodeRay td.line-numbers pre {
+	background: none;
+}
+table.CodeRay td.line-numbers a {
+	color: #AAA;
+	text-decoration: none;
+}
