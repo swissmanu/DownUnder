@@ -1,16 +1,26 @@
 module DownUnder
     class Core
         
+        def initialize(ressource_bundle)
+            @ressource_bundle = ressource_bundle
+        end
+        
         def render!(source)
             
             Logger.message "Looking for markdown files..."
             content = concat_files source, '.md'
-                        
-            Logger.message "Render Markdown..."
+            
+            if content.empty? then
+                Logger.warn " - No markdown files found! Exiting."
+                return
+            end
+            
+            
+            Logger.message "Parse Markdown..."
             html = parse_markdown content
-            html = "<html><head><meta charset=\"UTF-8\"><link href=\"style.css\" rel=\"stylesheet\" /></head><body>#{html}</body></html>"
+            html = "<html><head><meta charset=\"UTF-8\"><link href=\"#{@ressource_bundle.stylesheet}\" rel=\"stylesheet\" /></head><body>#{html}</body></html>"
 
-            Logger.message "Rendering PDF..."
+            Logger.message "Render PDF..."
             
             arguments = [
                 "wkhtmltopdf",
@@ -19,7 +29,7 @@ module DownUnder
                 "--toc",
                 "--toc-header-text \"Inhaltsverzeichnis\"",
                 "--outline",
-                #"--cover title.html",
+                "--cover \"#{@ressource_bundle.coverpage}\"",
                 "--footer-font-size 8",
                 "--footer-left \"[section] - [subsection]\"",
                 "--footer-right \"Seite [page]/[topage]\"",
@@ -47,9 +57,10 @@ module DownUnder
             else
                 Dir.foreach(path) do |filename|
                     if File.file?(filename) && filename.end_with?(extension)
+                        Logger.message " - \"#{filename}\""
                         content.concat(read_file(filename))
                     end
-                end                
+                end
             end
             
             content
@@ -64,7 +75,7 @@ module DownUnder
                 end
             end
             
-            content << "\n"
+            content.concat "\n\n"
         end
         
         def parse_markdown(markdown)
