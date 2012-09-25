@@ -29,5 +29,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'wkhtmltopdf-binary',  ['~> 0.9.9.1']
   gem.add_dependency 'redcarpet',           ['~> 2.1.1']
   gem.add_dependency 'coderay',             ['~> 1.0.7']
+  gem.add_dependency 'open4',               ['~> 1.3.0']
 
 end
