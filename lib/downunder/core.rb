@@ -20,9 +20,8 @@ module DownUnder
             html = "<html><head><meta charset=\"UTF-8\"><link href=\"#{@ressource_bundle.stylesheet}\" rel=\"stylesheet\" /></head><body>#{html}</body></html>"
 
             Logger.message "Render PDF..."
-            
             arguments = [
-                "wkhtmltopdf",
+                bin,
                 "--quiet",
                 "--title \"InTe Vorlesungsnotizen\"",
                 "--toc",
@@ -34,16 +33,16 @@ module DownUnder
                 "--footer-right \"Seite [page]/[topage]\"",
                 "--quiet",
                 "-",
-                target
+                "\"#{target}\""
             ]
-
-            IO.popen(arguments.join(" "), "wb+") do |pdf|
-                pdf.puts html
-                pdf.close_write
-                pdf.gets nil
-            end
-
-            Logger.message "Done."
+            stdout,stderr,status = Open3.capture3(arguments.join(" "), :stdin_data => html)
+            
+            unless stderr.empty?
+                Logger.error "wkhtmltopdf failed: \"#{stderr.strip}\""
+                Logger.message "PDF not created. Sorry :-("
+            else
+                Logger.message "PDF \"#{target}\" created. Bye :-)"
+            end 
         end
         
         
@@ -89,5 +88,10 @@ module DownUnder
             
             parser.render markdown
         end
+        
+        def bin
+            "\"#{(`which wkhtmltopdf`).chomp}\""
+        end
+        
     end
 end

@@ -45,7 +45,7 @@ module DownUnder
             
             # Render
             core = DownUnder::Core.new(bundle)
-            core.render! source, target
+            core.render!(source, target)
         end        
         
         map "-v" => :version

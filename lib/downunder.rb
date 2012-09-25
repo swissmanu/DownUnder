@@ -1,6 +1,7 @@
 require 'thor'
 require 'redcarpet'
 require 'coderay'
+require 'open3'
 
 module DownUnder
 
