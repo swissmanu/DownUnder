@@ -10,16 +10,19 @@ module DownUnder
         method_option :stylesheet, :type => :string, :aliases => ["-s"], :desc => "CSS stylesheet to style your content"
         def convert(source="")
             source = Dir.getwd if source.empty?
+            
             if options.output.nil? then
                 target = File.join [File.dirname(source),File.basename(source).concat(".pdf")]
             else
                 target = options.output
             end
             
+            
+            
             #Logger.message "render! #{source} #{target}"
             tmp = DownUnder::Core.new
             
-            tmp.render!
+            tmp.render! source
             
         end        
         
