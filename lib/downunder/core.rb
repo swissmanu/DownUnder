@@ -9,12 +9,30 @@ module DownUnder
             Logger.message "Render Markdown..."
             html = parse_markdown content
             html = "<html><head><meta charset=\"UTF-8\"><link href=\"style.css\" rel=\"stylesheet\" /></head><body>#{html}</body></html>"
-            File.open("output.html",'w') do |out|
-                out.write(html)
-            end
 
             Logger.message "Rendering PDF..."
-            `wkhtmltopdf --title "InTe Vorlesungsnotizen" -t --toc-depth 2 --toc-header-text "Inhaltsverzeichnis" --outline --cover title.html --footer-font-size 8 --footer-left "[section] - [subsection]" --footer-right "Seite [page]/[topage]" --quiet output.html test.pdf`
+            
+            arguments = [
+                "wkhtmltopdf",
+                "--quiet",
+                "--title \"InTe Vorlesungsnotizen\"",
+                "--toc",
+                "--toc-header-text \"Inhaltsverzeichnis\"",
+                "--outline",
+                #"--cover title.html",
+                "--footer-font-size 8",
+                "--footer-left \"[section] - [subsection]\"",
+                "--footer-right \"Seite [page]/[topage]\"",
+                "--quiet",
+                "-",
+                "test.pdf"
+            ]
+
+            IO.popen(arguments.join(" "), "wb+") do |pdf|
+                pdf.puts html
+                pdf.close_write
+                pdf.gets nil
+            end
 
             Logger.message "Done."
         end
@@ -46,12 +64,12 @@ module DownUnder
                 end
             end
             
-            content
+            content << "\n"
         end
         
         def parse_markdown(markdown)
             parser = Redcarpet::Markdown.new(
-            DownUnder::Util::HTMLWithCodeRay,
+                DownUnder::Util::HTMLWithCodeRay,
                 :autolink => true,
                 :space_after_headers => true,
                 :fenced_code_blocks => true

@@ -3,6 +3,11 @@ module DownUnder
     class CLI < Thor
         default_task :convert
         
+        desc "init", "Creates a .downunder directory with boilerplate stuff"
+        def init
+            Logger.message "init!"
+        end
+        
         desc "convert [SOURCE]", "Creates a PDF from a markdown file or a folder with markdown files."
         method_option :output, :type => :string, :aliases => ["-o"], :desc => "Your target PDF file"
         method_option :title, :type => :string, :aliases => ["-t"], :desc => "Document title"
@@ -17,13 +22,8 @@ module DownUnder
                 target = options.output
             end
             
-            
-            
-            #Logger.message "render! #{source} #{target}"
-            tmp = DownUnder::Core.new
-            
-            tmp.render! source
-            
+            core = DownUnder::Core.new
+            core.render! source            
         end        
         
         map "-v" => :version
