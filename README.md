@@ -2,11 +2,11 @@
 DownUnder creates PDF documents from one or more with (multi) markdown formatted
 text files.
 
-The command line interface is implemented using Ruby and Thor. Your markdown formatted
-text is parsed using RedCarpet. The programmers of you will love the automatic
-syntax higlightning provided by CodeRay.
+The command line interface is implemented using Ruby and [Thor](https://github.com/wycats/thor).
+Your markdown formatted text is parsed using [RedCarpet](https://github.com/vmg/redcarpet).
+The programmers of you will love the automatic syntax higlightning provided by [CodeRay](https://github.com/rubychan/coderay).
 
-wkhtmltopdf does the the PDF processing finally.
+[wkhtmltopdf](https://github.com/antialize/wkhtmltopdf) does the the PDF processing finally.
 
 ## Installation
 You have to build DownUnders Ruby Gem by yourself for the moment. Clone the
@@ -50,3 +50,7 @@ and CSS skills
 When customizing templates, you don't have to start from a plain page. Run
 the `downunder init` command to create a `.downunder` directory with a set of default
 templates.
+
+## Inspiration
+DownUnder is heavily influenced by [Gimli](https://github.com/walle/gimli). My intentaion
+was to simplify the command line interface and creation of templates.
