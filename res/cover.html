@@ -3,21 +3,10 @@
 	<meta charset="UTF-8">
 	<link href="style.css" rel="stylesheet" type="text/css" />
 	
-	<script type="text/javascript">
-		function getNiceDateTime() {
-			var date = new Date();
-			var day = date.getDate();
-			var month = date.getMonth()+1;
-			var year = date.getFullYear();
-			var hour = date.getHours();
-			var minute = date.getMinutes();
-			
-			return day+'.'+month+'.'+year+', '+hour+':'+minute;
-		}
-	</script>
+	<script type="text/javascript" src="helper.js"></script>
 	
 </head>
-<body class="titlepage">
+<body class="coverpage">
 	<header>
 		<h1>{title}</h1>
 		<h2>{author}</h2>

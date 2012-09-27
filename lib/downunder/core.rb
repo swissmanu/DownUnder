@@ -34,6 +34,7 @@ module DownUnder
                 "-",
                 "\"#{target}\""
             ]
+            
             stdout,stderr,status = Open3.capture3(arguments.join(" "), :stdin_data => html)
             
             unless stderr.empty?
