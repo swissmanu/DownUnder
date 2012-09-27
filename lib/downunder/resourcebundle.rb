@@ -25,7 +25,7 @@ module DownUnder
 
             if Dir.exist?(resource_directory)
                 @stylesheet = lookup_file(resource_directory, "style.css")
-                @coverpage = lookup_file(resource_directory, "coverpage.html")
+                @coverpage = lookup_file(resource_directory, "cover.html")
                 @header = lookup_file(resource_directory, "header.html")
                 @footer = lookup_file(resource_directory, "footer.html")       
             end

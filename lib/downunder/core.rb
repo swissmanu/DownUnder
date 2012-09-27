@@ -1,8 +1,10 @@
 module DownUnder
     class Core
         
-        def initialize(ressource_bundle)
-            @ressource_bundle = ressource_bundle
+        attr_reader :resource_bundle
+        
+        def initialize(resource_bundle)
+            @resource_bundle = resource_bundle
         end
         
         def render!(source, target)
@@ -17,7 +19,7 @@ module DownUnder
             
             Logger.message "Parse Markdown..."
             html = parse_markdown content
-            html = "<html><head><meta charset=\"UTF-8\"><link href=\"#{@ressource_bundle.stylesheet}\" rel=\"stylesheet\" /></head><body>#{html}</body></html>"
+            html = "<html><head><meta charset=\"UTF-8\"><link href=\"#{@resource_bundle.stylesheet}\" rel=\"stylesheet\" /></head><body>#{html}</body></html>"
 
             Logger.message "Render PDF..."
             arguments = [
@@ -27,11 +29,8 @@ module DownUnder
                 "--toc",
                 "--toc-header-text \"Inhaltsverzeichnis\"",
                 "--outline",
-                "--cover \"#{@ressource_bundle.coverpage}\"",
-                "--footer-font-size 8",
-                "--footer-left \"[section] - [subsection]\"",
-                "--footer-right \"Seite [page]/[topage]\"",
                 "--quiet",
+                prepare_resource_bundle(@resource_bundle),
                 "-",
                 "\"#{target}\""
             ]
@@ -91,6 +90,16 @@ module DownUnder
         
         def bin
             "\"#{(`which wkhtmltopdf`).chomp}\""
+        end
+        
+        def prepare_resource_bundle(bundle)
+            args = Array.new
+            
+            args << "--cover #{bundle.coverpage}" unless bundle.coverpage.nil?
+            args << "--header-html #{bundle.header}" unless bundle.header.nil?
+            args << "--footer-html #{bundle.footer}" unless bundle.footer.nil?
+            
+            args.join " "
         end
         
     end
