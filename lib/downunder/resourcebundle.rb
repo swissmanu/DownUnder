@@ -22,15 +22,24 @@ module DownUnder
         # default resources defined from ResourceBundle.initialize
         def lookup(directory)
             resource_directory = File.join directory, ".downunder"
-            stylesheet = File.join resource_directory, "style.css"
-            coverpage = File.join resource_directory, "cover.html"
-            header = File.join resource_directory,"header.html"
-            footer = File.join resource_directory,"footer.html"
-            
-            @stylesheet = stylesheet if File.exists?(stylesheet)
-            @coverpage = coverpage if File.exists?(coverpage)
-            @header = header if File.exists?(header)
-            @footer = footer if File.exists?(footer)
+
+            if Dir.exist?(resource_directory)
+                @stylesheet = lookup_file(resource_directory, "style.css")
+                @coverpage = lookup_file(resource_directory, "coverpage.html")
+                @header = lookup_file(resource_directory, "header.html")
+                @footer = lookup_file(resource_directory, "footer.html")       
+            end
+        end
+        
+        private
+        ##
+        # Checks the availability of a resource file. If its not present, blank
+        # gets returned. Otherwise its full path.
+        def lookup_file(resource_directory, file)
+            file_path = File.join resource_directory, file
+            if File.exists?(file_path)
+                file_path
+            end
         end
         
     end
