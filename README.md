@@ -33,7 +33,7 @@ Run `downunder --help` for more detailed options.
 
 ## Customize PDF Output
 DownUnder uses a set of default templates for PDF creation. As soon as 
-DownUnder finds a `.downunder` aside your markdown files, it automatically 
+DownUnder finds a `.downunder` directory aside your markdown files, it automatically 
 tries reading the templates from there.
 
 Following template files are supported:
@@ -44,10 +44,10 @@ Following template files are supported:
 * `footer.html` - Page footers
 
 As you may already guess it's not difficult to modify the templates using your HTML
-and CSS skills
+and CSS skills.
 
 ### Boilerplate
-When customizing templates, you don't have to start from a plain page. Run
+When customizing templates, you don't have to start from a blank page. Run
 the `downunder init` command to create a `.downunder` directory with a set of default
 templates.
 
